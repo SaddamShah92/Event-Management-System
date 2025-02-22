@@ -1,12 +1,9 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Event
 from .forms import EventRegistrationForm
 
-@login_required
+# @login_required
 def register_for_event(request):
     if request.method == "POST":
         form = EventRegistrationForm(request.POST)
