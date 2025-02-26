@@ -16,3 +16,14 @@ def add_event(request):
         form = EventForm()
     return render(request, 'add_event.html', {'form': form})
 
+
+# def add_event(request):
+#     if request.method == 'POST':
+#         form = EventForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('event_list')  # Redirect to event list after adding
+#     else:
+#         form = EventForm()
+#     return render(request, 'add_event.html', {'form': form})
+
