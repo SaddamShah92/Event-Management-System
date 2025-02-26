@@ -1,5 +1,10 @@
 from django import forms
 from . models import Event
 
-class EventRegistrationForm(forms.Form):
-    event = forms.ModelChoiceField(queryset=Event.objects.all(), label = 'Select Event')
+class EventForm(forms.ModelForm):
+    class Meta:
+     model = Event
+     fields = ['name', 'date_time', 'description', 'location']
+     widgets = {
+        'date_time' : forms.DateTimeInput(attrs={'type' : 'datetime-local'}),
+    }

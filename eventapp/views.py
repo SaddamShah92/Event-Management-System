@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from .models import Event
-from .forms import EventRegistrationForm
+from .forms import EventForm
 
-# @login_required
-def register_for_event(request):
-    if request.method == "POST":
-        form = EventRegistrationForm(request.POST)
+def event_list(request):
+    events = Event.objects.all().order_by('date_time')
+    return render(request, 'event_list.html', {'events' : events})
+
+def add_event(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
         if form.is_valid():
-            event = form.cleaned_data["event"]
-            event.registered_users.add(request.user)  # Add the user to the event
-            return redirect("event_list")  # Redirect to event list page
+            form.save()
+            return redirect('event_list')  # Redirect to event list after adding
     else:
-        form = EventRegistrationForm()
+        form = EventForm()
+    return render(request, 'add_event.html', {'form': form})
 
-    return render(request, "event_registration.html", {"form": form})
