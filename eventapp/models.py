@@ -7,7 +7,17 @@ class Event(models.Model):
     date_time = models.DateTimeField()
     description = models.TextField()
     location = models.CharField(max_length=255)
-    registered_users = models.ManyToManyField(User, related_name= "registered_events", blank=True)
 
     def __str__(self):
         return self.name
+    
+class EventRegistration(models.Model):
+    user = models.ForeignKey(User, on_delete= models.CASCADE)
+    event = models.ForeignKey(Event, on_delete= models.CASCADE)
+    registered_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'event')
+
+    def __str__(self):
+        return f'{self.user.username} - {self.event.name}'
